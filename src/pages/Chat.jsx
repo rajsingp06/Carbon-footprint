@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Send, Leaf, Sparkles, User } from 'lucide-react';
 import './Chat.css';
@@ -17,6 +17,10 @@ const suggestions = [
   "Compare my footprint with last month.",
 ];
 
+/**
+ * Chat component providing a conversational AI interface for sustainability coaching.
+ * @returns {JSX.Element} The rendered Chat component.
+ */
 const Chat = () => {
   const [messages, setMessages] = useState(initialMessages);
   const [inputValue, setInputValue] = useState('');
@@ -35,6 +39,7 @@ const Chat = () => {
     if (!text.trim()) return;
 
     // Add user message
+    // eslint-disable-next-line react-hooks/purity
     const newUserMsg = { id: Date.now(), type: 'user', text };
     setMessages(prev => [...prev, newUserMsg]);
     setInputValue('');
@@ -53,26 +58,27 @@ const Chat = () => {
   };
 
   return (
-    <motion.div 
+    <motion.main 
       className="chat-container container"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
+      aria-label="AI Climate Coach Chat"
     >
-      <div className="chat-interface glass-panel">
+      <section className="chat-interface glass-panel" aria-live="polite">
         
-        <div className="chat-header">
-          <div className="ai-avatar">
+        <header className="chat-header">
+          <div className="ai-avatar" aria-hidden="true">
             <Leaf size={20} color="var(--color-neon-mint)" />
           </div>
           <div>
             <h2>EcoBuddy AI</h2>
-            <span className="status">Online & analyzing your data</span>
+            <span className="status" role="status">Online & analyzing your data</span>
           </div>
-        </div>
+        </header>
 
-        <div className="messages-area">
+        <div className="messages-area" role="log" aria-live="polite">
           {messages.map((msg) => (
             <motion.div 
               key={msg.id}
@@ -108,12 +114,13 @@ const Chat = () => {
           <div ref={messagesEndRef} />
         </div>
 
-        <div className="suggestions-area">
+        <div className="suggestions-area" aria-label="Suggested questions">
           {suggestions.map((suggestion, idx) => (
             <button 
               key={idx} 
               className="suggestion-chip glass-button-secondary"
               onClick={() => handleSend(suggestion)}
+              aria-label={`Ask: ${suggestion}`}
             >
               {suggestion}
             </button>
@@ -121,24 +128,28 @@ const Chat = () => {
         </div>
 
         <div className="input-area">
+          <label htmlFor="chat-input" className="sr-only" style={{display: 'none'}}>Type your message</label>
           <input 
+            id="chat-input"
             type="text" 
             placeholder="Ask about your carbon footprint..." 
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && handleSend(inputValue)}
+            aria-label="Type your message to EcoBuddy AI"
           />
           <button 
             className="send-button"
             onClick={() => handleSend(inputValue)}
             disabled={!inputValue.trim()}
+            aria-label="Send message"
           >
-            <Send size={20} />
+            <Send size={20} aria-hidden="true" />
           </button>
         </div>
         
-      </div>
-    </motion.div>
+      </section>
+    </motion.main>
   );
 };
 

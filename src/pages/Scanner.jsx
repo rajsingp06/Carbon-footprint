@@ -1,8 +1,12 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { UploadCloud, FileText, CheckCircle, Zap, Activity } from 'lucide-react';
 import './Scanner.css';
 
+/**
+ * Scanner component for uploading and analyzing bills and receipts using AI OCR.
+ * @returns {JSX.Element} The rendered Scanner component.
+ */
 const Scanner = () => {
   const [dragActive, setDragActive] = useState(false);
   const [scanState, setScanState] = useState('idle'); // idle, scanning, complete
@@ -45,23 +49,24 @@ const Scanner = () => {
   };
 
   return (
-    <motion.div 
+    <motion.main 
       className="scanner-container container"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
+      aria-labelledby="scanner-title"
     >
-      <motion.div 
+      <motion.header 
         className="scanner-header"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <h1 className="text-gradient">Smart AI Scanner</h1>
-        <p>Upload your energy bills or receipts to extract carbon data instantly.</p>
-      </motion.div>
+        <h1 id="scanner-title" className="text-gradient">Smart AI Scanner</h1>
+        <p>Upload your electricity bills, fuel receipts, shopping receipts, or grocery receipts to extract carbon data instantly.</p>
+      </motion.header>
 
-      <div className="scanner-content">
+      <section className="scanner-content" aria-live="polite">
         <AnimatePresence mode="wait">
           {scanState === 'idle' && (
             <motion.div 
@@ -74,15 +79,18 @@ const Scanner = () => {
               onDragLeave={handleDrag}
               onDragOver={handleDrag}
               onDrop={handleDrop}
+              role="button"
+              tabIndex="0"
+              aria-label="Drag and drop file upload zone"
             >
-              <input type="file" id="file-upload" multiple={false} onChange={handleChange} accept="image/*,.pdf" />
+              <input type="file" id="file-upload" multiple={false} onChange={handleChange} accept="image/*,.pdf" aria-label="File upload input" />
               <label htmlFor="file-upload" className="upload-label">
                 <div className="upload-icon-wrapper">
-                  <UploadCloud size={48} color="var(--color-neon-mint)" />
+                  <UploadCloud size={48} color="var(--color-neon-mint)" aria-hidden="true" />
                 </div>
                 <h3>Drag & Drop your bill here</h3>
                 <p>or click to browse files</p>
-                <span className="file-types">Supports PDF, JPG, PNG</span>
+                <span className="file-types">Supports PDF, JPG, PNG (Electricity, Fuel, Grocery)</span>
               </label>
             </motion.div>
           )}
@@ -138,17 +146,17 @@ const Scanner = () => {
 
               <div className="ai-recommendation glass-panel">
                 <h3>AI Recommendation</h3>
-                <p>Your energy usage is 12% higher than similar households this month. Switching to LED bulbs and adjusting your thermostat by 1 degree could save you roughly 15 kg CO₂ and $24 next month.</p>
+                <p>Your energy usage is 12% higher than similar households this month. Switching to LED bulbs and adjusting your thermostat by 1 degree could save you roughly 15 kg CO₂ and $24 next month. This adds to your dynamic green score!</p>
                 
-                <button className="glass-button" onClick={resetScanner} style={{marginTop: '20px'}}>
+                <button className="glass-button" onClick={resetScanner} style={{marginTop: '20px'}} aria-label="Scan another bill or receipt">
                   Scan Another Bill
                 </button>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
-    </motion.div>
+      </section>
+    </motion.main>
   );
 };
 

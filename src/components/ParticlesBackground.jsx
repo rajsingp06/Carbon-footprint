@@ -1,22 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 const ParticlesBackground = () => {
-  const [particles, setParticles] = useState([]);
-
-  useEffect(() => {
-    // Generate random particles
+  const [particles] = useState(() => {
     const particleCount = 50;
-    const newParticles = Array.from({ length: particleCount }).map((_, i) => ({
+    return Array.from({ length: particleCount }).map((_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
       size: Math.random() * 3 + 1,
       duration: Math.random() * 20 + 10,
       delay: Math.random() * 5,
+      initialOpacity: Math.random() * 0.5 + 0.1,
     }));
-    setParticles(newParticles);
-  }, []);
+  });
 
   return (
     <div id="particles-bg">
@@ -24,7 +21,7 @@ const ParticlesBackground = () => {
         <motion.div
           key={p.id}
           initial={{
-            opacity: Math.random() * 0.5 + 0.1,
+            opacity: p.initialOpacity,
             x: `${p.x}vw`,
             y: `${p.y}vh`,
           }}

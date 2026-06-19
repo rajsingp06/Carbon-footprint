@@ -1,21 +1,26 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Leaf, Zap, CloudRain } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
 
+/**
+ * Home component serving as the landing page for EcoBuddy AI.
+ * Displays the 3D Earth visualization, AI greeting, and dynamic metrics.
+ * @returns {JSX.Element} The rendered Home component.
+ */
 const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <motion.div 
+    <motion.main 
       className="home-container"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
+      aria-labelledby="hero-title"
     >
-      <motion.div 
+      <motion.section 
         className="hero-section"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -40,7 +45,7 @@ const Home = () => {
             <p>Hi, I'm EcoBuddy AI.</p>
           </motion.div>
 
-          <h1 className="hero-title">
+          <h1 id="hero-title" className="hero-title">
             Your Personal <br/>
             <span className="text-gradient">AI Climate Coach</span>
           </h1>
@@ -54,17 +59,19 @@ const Home = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => navigate('/dashboard')}
+            aria-label="Start your green journey by navigating to the dashboard"
           >
-            Start My Green Journey <ArrowRight size={20} />
+            Start My Green Journey <ArrowRight size={20} aria-hidden="true" />
           </motion.button>
         </div>
-      </motion.div>
+      </motion.section>
 
-      <motion.div 
+      <motion.section 
         className="metrics-grid"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8, duration: 0.6 }}
+        aria-label="Sustainability Metrics"
       >
         <div className="metric-card glass-panel">
           <Leaf className="metric-icon green" />
@@ -81,14 +88,14 @@ const Home = () => {
           </div>
         </div>
         <div className="metric-card glass-panel">
-          <CloudRain className="metric-icon blue" />
+          <CloudRain className="metric-icon blue" aria-hidden="true" />
           <div className="metric-info">
             <h3>15%</h3>
             <p>Below Average</p>
           </div>
         </div>
-      </motion.div>
-    </motion.div>
+      </motion.section>
+    </motion.main>
   );
 };
 

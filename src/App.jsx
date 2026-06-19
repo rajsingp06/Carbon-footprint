@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 
@@ -10,6 +9,11 @@ import Scanner from './pages/Scanner';
 import Chat from './pages/Chat';
 import './App.css';
 
+/**
+ * AnimatedRoutes component that wraps the main routing logic 
+ * with Framer Motion's AnimatePresence for smooth page transitions.
+ * @returns {JSX.Element} The routes wrapped in AnimatePresence.
+ */
 const AnimatedRoutes = () => {
   const location = useLocation();
   
@@ -25,13 +29,17 @@ const AnimatedRoutes = () => {
   );
 };
 
+/**
+ * Main App component serving as the root of the EcoBuddy AI application.
+ * @returns {JSX.Element} The rendered App component.
+ */
 function App() {
   return (
     <BrowserRouter>
       <div className="app-container">
         <ParticlesBackground />
         <Navbar />
-        <main className="main-content">
+        <main className="main-content" id="main-content" aria-label="Main Content">
           <AnimatedRoutes />
         </main>
       </div>

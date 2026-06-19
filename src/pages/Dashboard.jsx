@@ -1,7 +1,6 @@
-import React from 'react';
 import { motion } from 'framer-motion';
-import { PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import { Flame, Trophy, TrendingDown, Target, Award, CheckCircle2 } from 'lucide-react';
+import { PieChart, Pie, Cell, LineChart, Line, XAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { Flame, Trophy, TrendingDown, Award, CheckCircle2 } from 'lucide-react';
 import './Dashboard.css';
 
 const monthlyData = [
@@ -20,29 +19,35 @@ const categoryData = [
   { name: 'Shopping', value: 10, color: '#FFD166' },
 ];
 
+/**
+ * Dashboard component displaying the user's carbon footprint score, trends,
+ * weekly sustainability reports, and AI-generated action plans.
+ * @returns {JSX.Element} The rendered Dashboard component.
+ */
 const Dashboard = () => {
   return (
-    <motion.div 
+    <motion.main 
       className="dashboard-container container"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
+      aria-labelledby="dashboard-title"
     >
-      <motion.div 
+      <motion.header 
         className="dashboard-header"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
         <div>
-          <h1 className="text-gradient">Your Impact</h1>
+          <h1 id="dashboard-title" className="text-gradient">Your Impact</h1>
           <p>You're doing great! Emissions are down 15% this month.</p>
         </div>
-        <div className="streak-badge glass-panel">
-          <Flame color="#FFD166" size={20} />
+        <div className="streak-badge glass-panel" aria-label="Eco Streak: 14 Days">
+          <Flame color="#FFD166" size={20} aria-hidden="true" />
           <span>14 Day Eco Streak</span>
         </div>
-      </motion.div>
+      </motion.header>
 
       <div className="dashboard-grid">
         {/* Main Score Card */}
@@ -80,23 +85,27 @@ const Dashboard = () => {
             </div>
           </div>
           
-          <div className="ai-insight">
-            <CheckCircle2 size={16} color="var(--color-neon-mint)" />
-            <p>AI Insight: Your transport emissions decreased significantly.</p>
+          <div className="ai-insight" aria-live="polite">
+            <CheckCircle2 size={16} color="var(--color-neon-mint)" aria-hidden="true" />
+            <div>
+              <strong>Weekly Sustainability Report</strong>
+              <p>AI Insight: Your transport emissions decreased significantly.</p>
+            </div>
           </div>
         </motion.div>
 
         {/* Trend Graph */}
-        <motion.div 
+        <motion.section 
           className="trend-card glass-panel"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
+          aria-label="6-Month Carbon Footprint Trend"
         >
-          <div className="card-header">
+          <header className="card-header">
             <h3>6-Month Trend</h3>
-            <TrendingDown color="var(--color-neon-mint)" size={20} />
-          </div>
+            <TrendingDown color="var(--color-neon-mint)" size={20} aria-hidden="true" />
+          </header>
           <div className="chart-container">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={monthlyData}>
@@ -109,14 +118,15 @@ const Dashboard = () => {
               </LineChart>
             </ResponsiveContainer>
           </div>
-        </motion.div>
+        </motion.section>
 
         {/* Breakdown */}
-        <motion.div 
+        <motion.section 
           className="breakdown-card glass-panel"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
+          aria-label="Emission Sources Breakdown"
         >
           <h3>Emission Sources</h3>
           <div className="categories-list">
@@ -133,21 +143,22 @@ const Dashboard = () => {
               </div>
             ))}
           </div>
-        </motion.div>
+        </motion.section>
 
         {/* Gamification */}
-        <motion.div 
+        <motion.section 
           className="gamification-card glass-panel"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
+          aria-label="Gamification and Achievements"
         >
-          <div className="card-header">
-            <h3>Achievements</h3>
-            <Trophy color="#FFD166" size={20} />
-          </div>
+          <header className="card-header">
+            <h3>Achievements & AI-Generated Action Plans</h3>
+            <Trophy color="#FFD166" size={20} aria-hidden="true" />
+          </header>
           
-          <div className="level-progress">
+          <div className="level-progress" aria-label="Level Explorer, 1250 out of 2000 XP">
             <div className="level-header">
               <span>Level: <strong className="text-gradient">Explorer</strong></span>
               <span>1,250 / 2,000 XP</span>
@@ -170,14 +181,22 @@ const Dashboard = () => {
               <Award size={24} />
               <span>Explorer</span>
             </div>
-            <div className="badge-item locked">
-              <Award size={24} />
+            <div className="badge-item locked" aria-label="Locked Badge: Guardian">
+              <Award size={24} aria-hidden="true" />
               <span>Guardian</span>
             </div>
           </div>
-        </motion.div>
+          
+          <div className="action-plan" style={{ marginTop: '20px' }}>
+            <h4 style={{ color: 'var(--color-neon-mint)', marginBottom: '8px' }}>Active Action Plan (Habit Tracking)</h4>
+            <ul style={{ paddingLeft: '20px', fontSize: '0.85rem', color: 'rgba(255,255,255,0.8)' }}>
+              <li>Cycle to work 2x this week</li>
+              <li>Reduce meat consumption by 1 meal</li>
+            </ul>
+          </div>
+        </motion.section>
       </div>
-    </motion.div>
+    </motion.main>
   );
 };
 
