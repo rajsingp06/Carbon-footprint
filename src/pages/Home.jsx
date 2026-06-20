@@ -47,11 +47,11 @@ const Home = () => {
 
           <h1 id="hero-title" className="hero-title">
             Your Personal <br/>
-            <span className="text-gradient">AI Climate Coach</span>
+            <span className="text-gradient">AI Carbon Reduction Coach</span>
           </h1>
           
           <p className="hero-subtitle">
-            The platform helps users understand, track, and reduce their carbon footprint through intelligent bill scanning, personalized AI coaching, and conversational environmental insights.
+            The platform helps users understand, track, and reduce their carbon footprint through intelligent bill scanning, personalized AI coaching, carbon footprint forecasting, and conversational environmental insights.
           </p>
 
           <motion.button 

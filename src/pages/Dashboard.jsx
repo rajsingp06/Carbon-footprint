@@ -4,12 +4,10 @@ import { Flame, TrendingDown, CheckCircle2, Target, Sparkles, Award, Coins } fro
 import './Dashboard.css';
 
 const monthlyData = [
-  { name: 'Jan', footprint: 400 },
-  { name: 'Feb', footprint: 350 },
-  { name: 'Mar', footprint: 380 },
-  { name: 'Apr', footprint: 310 },
-  { name: 'May', footprint: 280 },
-  { name: 'Jun', footprint: 250 },
+  { name: 'Jan', footprint: 420 },
+  { name: 'Feb', footprint: 380 },
+  { name: 'Mar', footprint: 340 },
+  { name: 'Apr (Forecast)', forecast: 290 },
 ];
 
 const categoryData = [
@@ -102,12 +100,10 @@ const Dashboard = () => {
           </div>
 
           <div className="understand-section" style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-            <button className="glass-button-secondary" style={{ width: '100%', marginBottom: '15px' }}>
-              Why is my footprint high?
-            </button>
+            <h4 style={{ marginBottom: '10px', fontSize: '0.9rem' }}>AI-Powered Emission Source Analysis</h4>
             <div className="ai-explanation" style={{ background: 'rgba(0, 255, 157, 0.1)', padding: '15px', borderRadius: '8px', border: '1px solid rgba(0, 255, 157, 0.2)' }}>
               <p style={{ fontSize: '0.9rem', lineHeight: '1.5' }}>
-                <strong style={{ color: 'var(--color-neon-mint)' }}>AI Explanation:</strong> Your largest contributor is transportation because you travel 18 km daily by car.
+                <strong style={{ color: 'var(--color-neon-mint)' }}>Why is my footprint high?</strong> Your largest contributor is transportation because you travel 18 km daily by car.
               </p>
             </div>
           </div>
@@ -122,7 +118,7 @@ const Dashboard = () => {
           aria-label="6-Month Carbon Footprint Trend"
         >
           <header className="card-header" style={{ marginBottom: '15px' }}>
-            <h3>6-Month Trend</h3>
+            <h3>Carbon Footprint Forecasting</h3>
             <TrendingDown color="var(--color-neon-mint)" size={20} aria-hidden="true" />
           </header>
           
@@ -153,7 +149,8 @@ const Dashboard = () => {
                   contentStyle={{ background: 'rgba(11,15,25,0.9)', border: '1px solid var(--color-border)', borderRadius: '8px' }}
                   itemStyle={{ color: 'var(--color-neon-mint)' }}
                 />
-                <Line type="monotone" dataKey="footprint" stroke="var(--color-neon-mint)" strokeWidth={3} dot={{ r: 4, fill: 'var(--color-deep-navy)', stroke: 'var(--color-neon-mint)' }} />
+                <Line type="monotone" dataKey="footprint" stroke="var(--color-neon-mint)" strokeWidth={3} dot={{ r: 4, fill: 'var(--color-deep-navy)', stroke: 'var(--color-neon-mint)' }} connectNulls />
+                <Line type="monotone" dataKey="forecast" stroke="#FFD166" strokeWidth={3} strokeDasharray="5 5" dot={{ r: 4, fill: 'var(--color-deep-navy)', stroke: '#FFD166' }} connectNulls />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -184,7 +181,7 @@ const Dashboard = () => {
           </div>
         </motion.section>
 
-        {/* AI Action Plan & Goals */}
+        {/* Personalized Action Plan */}
         <motion.section 
           className="gamification-card glass-panel"
           initial={{ opacity: 0, y: 20 }}
@@ -193,13 +190,13 @@ const Dashboard = () => {
           aria-label="AI Action Plan and Goals"
         >
           <header className="card-header">
-            <h3>AI Action Plan & Goals</h3>
+            <h3>Personalized Sustainability Action Plan</h3>
             <Target color="#FFD166" size={20} aria-hidden="true" />
           </header>
           
           {/* Goal-Based Reduction */}
           <div className="goal-section" style={{ marginBottom: '25px', padding: '15px', background: 'rgba(255,255,255,0.03)', borderRadius: '12px' }}>
-            <h4 style={{ marginBottom: '10px', fontSize: '0.9rem', color: 'rgba(255,255,255,0.9)' }}>Goal: Reduce carbon footprint by 20% in 60 days</h4>
+            <h4 style={{ marginBottom: '10px', fontSize: '0.9rem', color: 'rgba(255,255,255,0.9)' }}>Goal Tracking: Reduce carbon footprint by 20% in 60 days</h4>
             <div className="level-header" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '0.85rem' }}>
               <span>Current Progress:</span>
               <span style={{ color: 'var(--color-neon-mint)', fontWeight: '600' }}>80%</span>
@@ -207,40 +204,57 @@ const Dashboard = () => {
             <div className="progress-bar-bg" style={{ height: '8px', background: 'rgba(255,255,255,0.1)', borderRadius: '4px', overflow: 'hidden' }}>
               <div className="progress-bar-fill" style={{ width: '80%', height: '100%', background: 'linear-gradient(90deg, #059669, #00FF9D)' }}></div>
             </div>
-            <div style={{ marginTop: '8px', fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)', fontFamily: 'monospace' }}>
-              ████████░░ 80%
+          </div>
+          
+          {/* Detailed Coaching Actions */}
+          <div className="action-plan">
+            <h4 style={{ color: 'var(--color-neon-mint)', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Sparkles size={16} /> AI Carbon Reduction Coach
+            </h4>
+            
+            <div className="action-items" style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+              <div className="action-item" style={{ background: 'rgba(0,255,157,0.05)', padding: '15px', borderRadius: '8px', borderLeft: '4px solid var(--color-neon-mint)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                  <CheckCircle2 size={18} color="var(--color-neon-mint)" />
+                  <p style={{ fontSize: '1rem', fontWeight: '600', margin: 0 }}>Take the train twice this week</p>
+                </div>
+                <div style={{ paddingLeft: '28px', fontSize: '0.85rem', color: 'rgba(255,255,255,0.8)', display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                  <p><strong>Why it matters:</strong> Trains are 4x more carbon-efficient than driving alone.</p>
+                  <p><strong>Expected carbon savings:</strong> 8 kg CO₂</p>
+                  <p><strong>Difficulty level:</strong> Medium</p>
+                  <p><strong>Estimated impact:</strong> 12% reduction in transport footprint</p>
+                </div>
+              </div>
+              
+              <div className="action-item" style={{ background: 'rgba(0,255,157,0.05)', padding: '15px', borderRadius: '8px', borderLeft: '4px solid var(--color-neon-mint)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                  <CheckCircle2 size={18} color="var(--color-neon-mint)" />
+                  <p style={{ fontSize: '1rem', fontWeight: '600', margin: 0 }}>Reduce AC usage by 1 hour/day</p>
+                </div>
+                <div style={{ paddingLeft: '28px', fontSize: '0.85rem', color: 'rgba(255,255,255,0.8)', display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                  <p><strong>Why it matters:</strong> AC units consume massive amounts of grid electricity.</p>
+                  <p><strong>Expected carbon savings:</strong> 5 kg CO₂</p>
+                  <p><strong>Difficulty level:</strong> Easy</p>
+                  <p><strong>Estimated impact:</strong> 5% reduction in home energy footprint</p>
+                </div>
+              </div>
             </div>
           </div>
           
-          {/* AI Action Plan This Week */}
-          <div className="action-plan">
-            <h4 style={{ color: 'var(--color-neon-mint)', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Sparkles size={16} /> This Week's Plan
+          {/* Challenges */}
+          <div className="gamification-section" style={{ marginTop: '25px', paddingTop: '20px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+            <h4 style={{ color: '#FFD166', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Award size={16} /> Reduction Challenges & Eco-Rewards
             </h4>
             
-            <div className="action-items" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <div className="action-item" style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', background: 'rgba(0,255,157,0.05)', padding: '12px', borderRadius: '8px', borderLeft: '3px solid var(--color-neon-mint)' }}>
-                <CheckCircle2 size={18} color="var(--color-neon-mint)" style={{ flexShrink: 0, marginTop: '2px' }} />
-                <div>
-                  <p style={{ fontSize: '0.9rem', fontWeight: '500', marginBottom: '4px' }}>Taking the train twice this week</p>
-                  <span style={{ fontSize: '0.8rem', color: 'var(--color-emerald-green)', fontWeight: '600' }}>Save 8 kg CO₂</span>
-                </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', background: 'rgba(255,255,255,0.05)', padding: '10px 15px', borderRadius: '6px' }}>
+                <span style={{ fontSize: '0.9rem' }}><strong>Weekly Challenge:</strong> Zero-Waste Grocery Run</span>
+                <span style={{ fontSize: '0.85rem', color: '#FFD166' }}>+500 Coins</span>
               </div>
-              
-              <div className="action-item" style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', background: 'rgba(0,255,157,0.05)', padding: '12px', borderRadius: '8px', borderLeft: '3px solid var(--color-neon-mint)' }}>
-                <CheckCircle2 size={18} color="var(--color-neon-mint)" style={{ flexShrink: 0, marginTop: '2px' }} />
-                <div>
-                  <p style={{ fontSize: '0.9rem', fontWeight: '500', marginBottom: '4px' }}>Reduce AC usage by 1 hour/day</p>
-                  <span style={{ fontSize: '0.8rem', color: 'var(--color-emerald-green)', fontWeight: '600' }}>Save 5 kg CO₂</span>
-                </div>
-              </div>
-              
-              <div className="action-item" style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', background: 'rgba(0,255,157,0.05)', padding: '12px', borderRadius: '8px', borderLeft: '3px solid var(--color-neon-mint)' }}>
-                <CheckCircle2 size={18} color="var(--color-neon-mint)" style={{ flexShrink: 0, marginTop: '2px' }} />
-                <div>
-                  <p style={{ fontSize: '0.9rem', fontWeight: '500', marginBottom: '4px' }}>Carry reusable bottle</p>
-                  <span style={{ fontSize: '0.8rem', color: 'var(--color-emerald-green)', fontWeight: '600' }}>Save 2 kg CO₂</span>
-                </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', background: 'rgba(255,255,255,0.05)', padding: '10px 15px', borderRadius: '6px' }}>
+                <span style={{ fontSize: '0.9rem' }}><strong>Monthly Challenge:</strong> Reduce AC usage by 15%</span>
+                <span style={{ fontSize: '0.85rem', color: '#FFD166' }}>+2000 Coins</span>
               </div>
             </div>
           </div>

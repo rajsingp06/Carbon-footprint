@@ -33,6 +33,6 @@ describe('Dashboard Component', () => {
 
   it('renders action plans', () => {
     render(<Dashboard />);
-    expect(screen.getByText(/Taking the train twice this week/i)).toBeInTheDocument();
+    expect(screen.getByText(/Take the train twice this week/i)).toBeInTheDocument();
   });
 });

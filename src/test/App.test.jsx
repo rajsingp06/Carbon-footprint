@@ -11,6 +11,6 @@ describe('App Component', () => {
   it('renders the home page initially', () => {
     render(<App />);
     expect(screen.getByText(/Your Personal/i)).toBeInTheDocument();
-    expect(screen.getByText(/AI Climate Coach/i)).toBeInTheDocument();
+    expect(screen.getByText(/AI Carbon Reduction Coach/i)).toBeInTheDocument();
   });
 });
