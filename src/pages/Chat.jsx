@@ -12,8 +12,8 @@ const initialMessages = [
 ];
 
 const suggestions = [
-  "Why is my footprint high?",
-  "How can I reduce emissions this month?",
+  "Why is my footprint high this month?",
+  "How can I reduce my emissions?",
   "Compare my footprint with last month.",
 ];
 
@@ -74,7 +74,7 @@ const Chat = () => {
           </div>
           <div>
             <h2>EcoBuddy AI</h2>
-            <span className="status" role="status">Online & analyzing your data</span>
+            <span className="status" role="status">Providing context-aware responses based on your scanned bills</span>
           </div>
         </header>
 

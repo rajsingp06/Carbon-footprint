@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { PieChart, Pie, Cell, LineChart, Line, XAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import { Flame, TrendingDown, CheckCircle2, Target, Sparkles } from 'lucide-react';
+import { Flame, TrendingDown, CheckCircle2, Target, Sparkles, Award, Coins } from 'lucide-react';
 import './Dashboard.css';
 
 const monthlyData = [
@@ -241,6 +241,32 @@ const Dashboard = () => {
                   <p style={{ fontSize: '0.9rem', fontWeight: '500', marginBottom: '4px' }}>Carry reusable bottle</p>
                   <span style={{ fontSize: '0.8rem', color: 'var(--color-emerald-green)', fontWeight: '600' }}>Save 2 kg CO₂</span>
                 </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Eco-Rewards & Gamification */}
+          <div className="gamification-section" style={{ marginTop: '25px', paddingTop: '20px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+            <h4 style={{ color: '#FFD166', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Award size={16} /> Eco-Rewards & Gamification
+            </h4>
+            
+            <div className="rewards-info" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px', background: 'rgba(255, 209, 102, 0.1)', padding: '12px', borderRadius: '8px', border: '1px solid rgba(255, 209, 102, 0.2)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Coins color="#FFD166" size={20} />
+                <span style={{ fontWeight: '500' }}>Green Coins Earned</span>
+              </div>
+              <span style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#FFD166' }}>1,250</span>
+            </div>
+
+            <div className="badges-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+              <div className="badge-item earned active" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', background: 'rgba(255,255,255,0.05)', padding: '10px', borderRadius: '8px', border: '1px solid var(--color-neon-mint)' }}>
+                <Award size={24} color="var(--color-neon-mint)" style={{ marginBottom: '5px' }} />
+                <span style={{ fontSize: '0.8rem', fontWeight: 'bold' }}>Carbon Saver</span>
+              </div>
+              <div className="badge-item earned" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', background: 'rgba(255,255,255,0.05)', padding: '10px', borderRadius: '8px' }}>
+                <Award size={24} color="#FFD166" style={{ marginBottom: '5px' }} />
+                <span style={{ fontSize: '0.8rem', fontWeight: 'bold' }}>Eco Warrior</span>
               </div>
             </div>
           </div>

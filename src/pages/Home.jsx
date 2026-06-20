@@ -51,7 +51,7 @@ const Home = () => {
           </h1>
           
           <p className="hero-subtitle">
-            Track emissions, understand your impact, and build greener habits with AI.
+            The platform helps users understand, track, and reduce their carbon footprint through intelligent bill scanning, personalized AI coaching, and conversational environmental insights.
           </p>
 
           <motion.button 
