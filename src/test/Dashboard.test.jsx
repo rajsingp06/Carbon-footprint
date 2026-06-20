@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import Dashboard from '../pages/Dashboard';
+import { CarbonProvider } from '../context/CarbonContext';
 
 vi.mock('recharts', () => {
   const OriginalRechartsModule = vi.importActual('recharts');
@@ -21,18 +22,18 @@ vi.mock('recharts', () => {
 
 describe('Dashboard Component', () => {
   it('renders the personalized greeting', () => {
-    render(<Dashboard />);
+    render(<CarbonProvider><Dashboard /></CarbonProvider>);
     expect(screen.getByText(/Good Morning Raj/i)).toBeInTheDocument();
   });
 
   it('renders gamification and badges', () => {
-    render(<Dashboard />);
+    render(<CarbonProvider><Dashboard /></CarbonProvider>);
     expect(screen.getByText(/Carbon Saver/i)).toBeInTheDocument();
     expect(screen.getByText(/Eco Warrior/i)).toBeInTheDocument();
   });
 
   it('renders action plans', () => {
-    render(<Dashboard />);
+    render(<CarbonProvider><Dashboard /></CarbonProvider>);
     expect(screen.getByText(/Take the train twice this week/i)).toBeInTheDocument();
   });
 });

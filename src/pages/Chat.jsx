@@ -1,15 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Send, Leaf, Sparkles, User } from 'lucide-react';
+import { useCarbon } from '../context/CarbonContext';
 import './Chat.css';
-
-const initialMessages = [
-  {
-    id: 1,
-    type: 'ai',
-    text: "Hello! I'm your EcoBuddy AI. I noticed your transport emissions were a bit high this week. How can I help you reduce your footprint today?",
-  }
-];
 
 const suggestions = [
   "Why is my footprint high this month?",
@@ -22,7 +15,18 @@ const suggestions = [
  * @returns {JSX.Element} The rendered Chat component.
  */
 const Chat = () => {
-  const [messages, setMessages] = useState(initialMessages);
+  const { footprint, uploadedBills, totalSaved } = useCarbon();
+
+  const getInitialMessage = () => {
+    if (uploadedBills.length > 0) {
+      return `Hello! I'm your EcoBuddy AI. I see you just uploaded a new ${uploadedBills[0].category} bill! Based on your data, your current footprint is ${footprint} kg CO₂. How can I help you reduce this further?`;
+    }
+    return `Hello! I'm your EcoBuddy AI. Last month I recommended reducing AC usage, and you've already saved ${totalSaved} kg CO₂! Great progress. How can I help today?`;
+  };
+
+  const [messages, setMessages] = useState([
+    { id: 1, type: 'ai', text: getInitialMessage() }
+  ]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
@@ -48,10 +52,16 @@ const Chat = () => {
     // Simulate AI response
     setTimeout(() => {
       setIsTyping(false);
+      let replyText = "That's a great question! Based on your recent data, your highest emission source is driving. Switching to public transit twice a week could lower your monthly footprint by 20%. Would you like me to find the best transit routes for your usual commute?";
+      
+      if (uploadedBills.length > 0) {
+        replyText = `Based on your uploaded ${uploadedBills[0].category} receipts, electricity contributes heavily to your emissions. Reducing AC usage by 1 hour daily could reduce annual emissions by 60 kg CO₂. I've added this to your Dashboard Roadmap.`;
+      }
+
       const aiResponse = {
         id: Date.now() + 1,
         type: 'ai',
-        text: "That's a great question! Based on your recent data, your highest emission source is driving. Switching to public transit twice a week could lower your monthly footprint by 20%. Would you like me to find the best transit routes for your usual commute?",
+        text: replyText,
       };
       setMessages(prev => [...prev, aiResponse]);
     }, 1500);

@@ -1,6 +1,7 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { UploadCloud, FileText, CheckCircle, Zap, Activity } from 'lucide-react';
+import { useCarbon } from '../context/CarbonContext';
 import './Scanner.css';
 
 /**
@@ -10,8 +11,9 @@ import './Scanner.css';
 const Scanner = () => {
   const [dragActive, setDragActive] = useState(false);
   const [scanState, setScanState] = useState('idle'); // idle, scanning, complete
+  const { scanBill } = useCarbon();
   
-  const handleDrag = useCallback((e) => {
+  const handleDrag = (e) => {
     e.preventDefault();
     e.stopPropagation();
     if (e.type === "dragenter" || e.type === "dragover") {
@@ -19,23 +21,25 @@ const Scanner = () => {
     } else if (e.type === "dragleave") {
       setDragActive(false);
     }
-  }, []);
+  };
 
   const simulateScan = () => {
     setScanState('scanning');
     setTimeout(() => {
+      const billData = { emissions: 287, category: 'Electricity', usage: '380 kWh' };
+      scanBill(billData);
       setScanState('complete');
-    }, 3000);
+    }, 2500);
   };
 
-  const handleDrop = useCallback((e) => {
+  const handleDrop = (e) => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       simulateScan();
     }
-  }, []);
+  };
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -136,19 +140,24 @@ const Scanner = () => {
                 </div>
                 <div className="ext-card glass-panel">
                   <span>Usage Extracted</span>
-                  <h3>345 kWh</h3>
+                  <h3>380 kWh</h3>
                 </div>
                 <div className="ext-card glass-panel highlight">
-                  <span>Carbon Impact</span>
-                  <h3>142 kg CO₂</h3>
+                  <span>Estimated Emissions</span>
+                  <h3>287 kg CO₂</h3>
                 </div>
               </div>
 
               <div className="ai-recommendation glass-panel">
-                <h3>AI Recommendation</h3>
-                <p>Your energy usage is 12% higher than similar households this month. Switching to LED bulbs and adjusting your thermostat by 1 degree could save you roughly 15 kg CO₂ and $24 next month. This adds to your dynamic green score!</p>
+                <h3 style={{ marginBottom: '15px' }}>Dynamically Added to Dashboard</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><CheckCircle size={16} color="var(--color-neon-mint)"/> <span>Emission Sources</span></div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><CheckCircle size={16} color="var(--color-neon-mint)"/> <span>Monthly Tracking</span></div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><CheckCircle size={16} color="var(--color-neon-mint)"/> <span>AI Recommendations</span></div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><CheckCircle size={16} color="var(--color-neon-mint)"/> <span>Carbon Forecast</span></div>
+                </div>
                 
-                <button className="glass-button" onClick={resetScanner} style={{marginTop: '20px'}} aria-label="Scan another bill or receipt">
+                <button className="glass-button" onClick={resetScanner} style={{marginTop: '25px'}} aria-label="Scan another bill or receipt">
                   Scan Another Bill
                 </button>
               </div>

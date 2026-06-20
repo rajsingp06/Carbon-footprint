@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import { CarbonProvider } from './context/CarbonContext';
 
 import ParticlesBackground from './components/ParticlesBackground';
 import Navbar from './components/Navbar';
@@ -36,13 +37,15 @@ const AnimatedRoutes = () => {
 function App() {
   return (
     <BrowserRouter>
-      <div className="app-container">
-        <ParticlesBackground />
-        <Navbar />
-        <main className="main-content" id="main-content" aria-label="Main Content">
-          <AnimatedRoutes />
-        </main>
-      </div>
+      <CarbonProvider>
+        <div className="app-container">
+          <ParticlesBackground />
+          <Navbar />
+          <main className="main-content" id="main-content" aria-label="Main Content">
+            <AnimatedRoutes />
+          </main>
+        </div>
+      </CarbonProvider>
     </BrowserRouter>
   );
 }
