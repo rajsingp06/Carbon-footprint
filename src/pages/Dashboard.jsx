@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { PieChart, Pie, Cell, LineChart, Line, XAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import { Flame, Trophy, TrendingDown, Award, CheckCircle2 } from 'lucide-react';
+import { Flame, TrendingDown, CheckCircle2, Target, Sparkles } from 'lucide-react';
 import './Dashboard.css';
 
 const monthlyData = [
@@ -13,10 +13,10 @@ const monthlyData = [
 ];
 
 const categoryData = [
-  { name: 'Transport', value: 45, color: '#00FF9D' },
-  { name: 'Energy', value: 30, color: '#00E5FF' },
-  { name: 'Food', value: 15, color: '#059669' },
-  { name: 'Shopping', value: 10, color: '#FFD166' },
+  { name: '🚗 Transportation', value: 45, color: '#00FF9D' },
+  { name: '⚡ Electricity', value: 30, color: '#00E5FF' },
+  { name: '🍔 Food', value: 15, color: '#059669' },
+  { name: '🛍️ Shopping', value: 10, color: '#FFD166' },
 ];
 
 /**
@@ -35,13 +35,21 @@ const Dashboard = () => {
       aria-labelledby="dashboard-title"
     >
       <motion.header 
-        className="dashboard-header"
+        className="dashboard-header personalized-header"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
+        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '20px' }}
       >
-        <div>
-          <h1 id="dashboard-title" className="text-gradient">Your Impact</h1>
-          <p>You're doing great! Emissions are down 15% this month.</p>
+        <div className="greeting-section">
+          <h1 id="dashboard-title" className="text-gradient">Good Morning Raj 👋</h1>
+          <div className="personalized-insights" style={{ marginTop: '15px', background: 'rgba(255,255,255,0.05)', padding: '15px', borderRadius: '12px', borderLeft: '4px solid var(--color-neon-mint)' }}>
+            <p style={{ marginBottom: '8px', fontWeight: '500' }}>Based on your habits:</p>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, color: 'rgba(255,255,255,0.8)', fontSize: '0.9rem', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <li>• Transportation is your highest contributor</li>
+              <li>• You can reduce emissions by 12% this month</li>
+              <li>• Estimated savings: <strong style={{color: 'var(--color-neon-mint)'}}>48 kg CO₂</strong></li>
+            </ul>
+          </div>
         </div>
         <div className="streak-badge glass-panel" aria-label="Eco Streak: 14 Days">
           <Flame color="#FFD166" size={20} aria-hidden="true" />
@@ -85,11 +93,22 @@ const Dashboard = () => {
             </div>
           </div>
           
-          <div className="ai-insight" aria-live="polite">
-            <CheckCircle2 size={16} color="var(--color-neon-mint)" aria-hidden="true" />
+          <div className="ai-insight" aria-live="polite" style={{ marginTop: '10px' }}>
+            <CheckCircle2 size={16} color="var(--color-neon-mint)" aria-hidden="true" style={{ marginTop: '4px' }} />
             <div>
               <strong>Weekly Sustainability Report</strong>
-              <p>AI Insight: Your transport emissions decreased significantly.</p>
+              <p style={{ marginTop: '4px' }}>AI Insight: Your transport emissions decreased significantly.</p>
+            </div>
+          </div>
+
+          <div className="understand-section" style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+            <button className="glass-button-secondary" style={{ width: '100%', marginBottom: '15px' }}>
+              Why is my footprint high?
+            </button>
+            <div className="ai-explanation" style={{ background: 'rgba(0, 255, 157, 0.1)', padding: '15px', borderRadius: '8px', border: '1px solid rgba(0, 255, 157, 0.2)' }}>
+              <p style={{ fontSize: '0.9rem', lineHeight: '1.5' }}>
+                <strong style={{ color: 'var(--color-neon-mint)' }}>AI Explanation:</strong> Your largest contributor is transportation because you travel 18 km daily by car.
+              </p>
             </div>
           </div>
         </motion.div>
@@ -102,11 +121,31 @@ const Dashboard = () => {
           transition={{ delay: 0.2 }}
           aria-label="6-Month Carbon Footprint Trend"
         >
-          <header className="card-header">
+          <header className="card-header" style={{ marginBottom: '15px' }}>
             <h3>6-Month Trend</h3>
             <TrendingDown color="var(--color-neon-mint)" size={20} aria-hidden="true" />
           </header>
-          <div className="chart-container">
+          
+          <div className="tracking-stats" style={{ display: 'flex', gap: '20px', marginBottom: '20px', background: 'rgba(255,255,255,0.03)', padding: '15px', borderRadius: '12px' }}>
+            <div className="stat-column">
+              <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.6)' }}>January</span>
+              <p style={{ fontWeight: '600' }}>420 kg CO₂</p>
+            </div>
+            <div className="stat-column">
+              <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.6)' }}>February</span>
+              <p style={{ fontWeight: '600' }}>380 kg CO₂</p>
+            </div>
+            <div className="stat-column">
+              <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.6)' }}>March</span>
+              <p style={{ fontWeight: '600' }}>340 kg CO₂</p>
+            </div>
+            <div className="stat-column" style={{ marginLeft: 'auto', textAlign: 'right' }}>
+              <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.6)' }}>Overall Progress</span>
+              <p style={{ fontWeight: '700', color: 'var(--color-neon-mint)' }}>Reduction: 19%</p>
+            </div>
+          </div>
+
+          <div className="chart-container" style={{ height: '220px' }}>
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={monthlyData}>
                 <XAxis dataKey="name" stroke="rgba(255,255,255,0.4)" fontSize={12} tickLine={false} axisLine={false} />
@@ -145,54 +184,65 @@ const Dashboard = () => {
           </div>
         </motion.section>
 
-        {/* Gamification */}
+        {/* AI Action Plan & Goals */}
         <motion.section 
           className="gamification-card glass-panel"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          aria-label="Gamification and Achievements"
+          aria-label="AI Action Plan and Goals"
         >
           <header className="card-header">
-            <h3>Achievements & AI-Generated Action Plans</h3>
-            <Trophy color="#FFD166" size={20} aria-hidden="true" />
+            <h3>AI Action Plan & Goals</h3>
+            <Target color="#FFD166" size={20} aria-hidden="true" />
           </header>
           
-          <div className="level-progress" aria-label="Level Explorer, 1250 out of 2000 XP">
-            <div className="level-header">
-              <span>Level: <strong className="text-gradient">Explorer</strong></span>
-              <span>1,250 / 2,000 XP</span>
+          {/* Goal-Based Reduction */}
+          <div className="goal-section" style={{ marginBottom: '25px', padding: '15px', background: 'rgba(255,255,255,0.03)', borderRadius: '12px' }}>
+            <h4 style={{ marginBottom: '10px', fontSize: '0.9rem', color: 'rgba(255,255,255,0.9)' }}>Goal: Reduce carbon footprint by 20% in 60 days</h4>
+            <div className="level-header" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '0.85rem' }}>
+              <span>Current Progress:</span>
+              <span style={{ color: 'var(--color-neon-mint)', fontWeight: '600' }}>80%</span>
             </div>
-            <div className="progress-bar-bg">
-              <div className="progress-bar-fill" style={{ width: '62%' }}></div>
+            <div className="progress-bar-bg" style={{ height: '8px', background: 'rgba(255,255,255,0.1)', borderRadius: '4px', overflow: 'hidden' }}>
+              <div className="progress-bar-fill" style={{ width: '80%', height: '100%', background: 'linear-gradient(90deg, #059669, #00FF9D)' }}></div>
             </div>
-          </div>
-
-          <div className="badges-grid">
-            <div className="badge-item earned">
-              <Award size={24} />
-              <span>Seedling</span>
-            </div>
-            <div className="badge-item earned">
-              <Award size={24} />
-              <span>Sprout</span>
-            </div>
-            <div className="badge-item earned active">
-              <Award size={24} />
-              <span>Explorer</span>
-            </div>
-            <div className="badge-item locked" aria-label="Locked Badge: Guardian">
-              <Award size={24} aria-hidden="true" />
-              <span>Guardian</span>
+            <div style={{ marginTop: '8px', fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)', fontFamily: 'monospace' }}>
+              ████████░░ 80%
             </div>
           </div>
           
-          <div className="action-plan" style={{ marginTop: '20px' }}>
-            <h4 style={{ color: 'var(--color-neon-mint)', marginBottom: '8px' }}>Active Action Plan (Habit Tracking)</h4>
-            <ul style={{ paddingLeft: '20px', fontSize: '0.85rem', color: 'rgba(255,255,255,0.8)' }}>
-              <li>Cycle to work 2x this week</li>
-              <li>Reduce meat consumption by 1 meal</li>
-            </ul>
+          {/* AI Action Plan This Week */}
+          <div className="action-plan">
+            <h4 style={{ color: 'var(--color-neon-mint)', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Sparkles size={16} /> This Week's Plan
+            </h4>
+            
+            <div className="action-items" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <div className="action-item" style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', background: 'rgba(0,255,157,0.05)', padding: '12px', borderRadius: '8px', borderLeft: '3px solid var(--color-neon-mint)' }}>
+                <CheckCircle2 size={18} color="var(--color-neon-mint)" style={{ flexShrink: 0, marginTop: '2px' }} />
+                <div>
+                  <p style={{ fontSize: '0.9rem', fontWeight: '500', marginBottom: '4px' }}>Taking the train twice this week</p>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--color-emerald-green)', fontWeight: '600' }}>Save 8 kg CO₂</span>
+                </div>
+              </div>
+              
+              <div className="action-item" style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', background: 'rgba(0,255,157,0.05)', padding: '12px', borderRadius: '8px', borderLeft: '3px solid var(--color-neon-mint)' }}>
+                <CheckCircle2 size={18} color="var(--color-neon-mint)" style={{ flexShrink: 0, marginTop: '2px' }} />
+                <div>
+                  <p style={{ fontSize: '0.9rem', fontWeight: '500', marginBottom: '4px' }}>Reduce AC usage by 1 hour/day</p>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--color-emerald-green)', fontWeight: '600' }}>Save 5 kg CO₂</span>
+                </div>
+              </div>
+              
+              <div className="action-item" style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', background: 'rgba(0,255,157,0.05)', padding: '12px', borderRadius: '8px', borderLeft: '3px solid var(--color-neon-mint)' }}>
+                <CheckCircle2 size={18} color="var(--color-neon-mint)" style={{ flexShrink: 0, marginTop: '2px' }} />
+                <div>
+                  <p style={{ fontSize: '0.9rem', fontWeight: '500', marginBottom: '4px' }}>Carry reusable bottle</p>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--color-emerald-green)', fontWeight: '600' }}>Save 2 kg CO₂</span>
+                </div>
+              </div>
+            </div>
           </div>
         </motion.section>
       </div>
